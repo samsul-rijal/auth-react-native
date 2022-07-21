@@ -56,10 +56,9 @@ const Users = ({navigation}) => {
 
 
     return (
-        <View>
-
-            <TouchableOpacity onPress={handleLogout} style={{margin: 8, color: 'red', fontSize: 18, fontWeight: 'bold', textAlign: 'end'}}>
-                <Text>Logout</Text>
+        <View style={{marginTop: 5}}>
+            <TouchableOpacity onPress={handleLogout} style={{margin: 8,textAlign: 'end'}}>
+                <Text style={{color: 'red', fontSize: 18, fontWeight: 'bold'}}>Logout</Text>
             </TouchableOpacity>
             <View style={{display: 'flex', alignItems: 'center'}}>
                 <Text 

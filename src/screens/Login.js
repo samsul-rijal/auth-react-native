@@ -9,6 +9,8 @@ export default function Login({navigation}) {
         email: '',
         password: '',
     });
+
+    const [isLoading, setIsLoading] = useState(false);
     
     const handleOnChange = (name, value) => {
         setForm({
@@ -26,13 +28,14 @@ export default function Login({navigation}) {
             };
         
             const body = JSON.stringify(form);
+            setIsLoading(true)
             const response = await axios.post('https://api.kontenbase.com/query/api/v1/d4092d20-bf08-4b97-a40f-d9cce26be7ea/auth/login', body, config);
             // console.log(response);
-            
+            setIsLoading(false)           
             if (response) {
                 await AsyncStorage.setItem('token', response.data.token);
             }
-                
+            
             const value = await AsyncStorage.getItem('token');
             if (value !== null) {
                 console.log(value);
@@ -42,6 +45,8 @@ export default function Login({navigation}) {
         } catch (error) {
             console.log(error);
             alert(error.response.data.message);
+            setIsLoading(false)           
+
         }
     };
 
@@ -73,7 +78,9 @@ export default function Login({navigation}) {
             </View>
 
             <TouchableOpacity style={style.button} onPress={handleOnPress}>
-                <Text style={style.textButton}>Login</Text>
+                {
+                    isLoading ? <Text style={style.textButton}>Loading ...</Text> : <Text style={style.textButton}>Login</Text>
+                }
             </TouchableOpacity>
             <Text onPress={() => navigation.navigate("Register")} style={{color: 'grey', marginTop: 5}}>don't have an account? Register!</Text>
         </View>
